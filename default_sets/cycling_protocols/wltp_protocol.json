@@ -1,0 +1,10 @@
+{
+    "TotalTime": 1800,
+    "FunctionName": "wltp_current",
+    "InitialStateOfCharge": 0.99,
+    "Metadata": {
+        "Description": "Parameter set that shows an example of how to include a user defined function in the cycling protocol parameters.",
+        "Title": "user_defined_current_function"
+    },
+    "Protocol": "Function"
+}
