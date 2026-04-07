@@ -5,14 +5,14 @@ exdata = joinpath(battmo_base, "examples", "example_data")
 defaultdata = joinpath(battmo_base, "src", "input", "defaults", "cell_parameters", "data", "sodium_ion")
 
 
-data_pe_ocp = CSV.read(joinpath(defaultdata, "Chayambuka_pe_ocp.csv"), DataFrame)
-data_ne_ocp = CSV.read(joinpath(defaultdata, "Chayambuka_ne_ocp.csv"), DataFrame)
-data_pe_D = CSV.read(joinpath(defaultdata, "Chayambuka_pe_D.csv"), DataFrame)
-data_ne_D = CSV.read(joinpath(defaultdata, "Chayambuka_ne_D.csv"), DataFrame)
-data_pe_k = CSV.read(joinpath(defaultdata, "Chayambuka_pe_k.csv"), DataFrame)
-data_ne_k = CSV.read(joinpath(defaultdata, "Chayambuka_ne_k.csv"), DataFrame)
-data_elyte_cond = CSV.read(joinpath(defaultdata, "Chayambuka_elyte_conductivity.csv"), DataFrame)
-data_elyte_diff = CSV.read(joinpath(defaultdata, "Chayambuka_elyte_D.csv"), DataFrame)
+data_pe_ocp = CSV.read(joinpath(defaultdata, "chayambuka_pe_ocp.csv"), DataFrame)
+data_ne_ocp = CSV.read(joinpath(defaultdata, "chayambuka_ne_ocp.csv"), DataFrame)
+data_pe_D = CSV.read(joinpath(defaultdata, "chayambuka_pe_D.csv"), DataFrame)
+data_ne_D = CSV.read(joinpath(defaultdata, "chayambuka_ne_D.csv"), DataFrame)
+data_pe_k = CSV.read(joinpath(defaultdata, "chayambuka_pe_k.csv"), DataFrame)
+data_ne_k = CSV.read(joinpath(defaultdata, "chayambuka_ne_k.csv"), DataFrame)
+data_elyte_cond = CSV.read(joinpath(defaultdata, "chayambuka_elyte_sigma.csv"), DataFrame)
+data_elyte_diff = CSV.read(joinpath(defaultdata, "chayambuka_elyte_D.csv"), DataFrame)
 
 pe_ocp = data_pe_ocp[:, 2]
 x_pe = data_pe_ocp[:, 1] # stoich -
@@ -57,7 +57,6 @@ function calc_ne_ocp(c, T, refT, cmax)
 	return ocp(c / cmax)
 end
 
-@eval Main calc_ne_ocp = $calc_ne_ocp
 
 function calc_pe_ocp(c, T, refT, cmax)
 
@@ -65,7 +64,6 @@ function calc_pe_ocp(c, T, refT, cmax)
 	return ocp(c / cmax)
 end
 
-@eval Main calc_pe_ocp = $calc_pe_ocp
 
 function calc_elyte_cond(c, T)
 
@@ -73,7 +71,6 @@ function calc_elyte_cond(c, T)
 	return cond(c)
 end
 
-@eval Main calc_elyte_cond = $calc_elyte_cond
 
 function calc_elyte_diff(c, T)
 
@@ -81,7 +78,6 @@ function calc_elyte_diff(c, T)
 	return diff(c)
 end
 
-@eval Main calc_elyte_diff = $calc_elyte_diff
 
 function calc_pe_D(c, T, refT, cmax)
 
@@ -89,15 +85,12 @@ function calc_pe_D(c, T, refT, cmax)
 	return diff(c)
 end
 
-@eval Main calc_pe_D = $calc_pe_D
-
 function calc_ne_D(c, T, refT, cmax)
 
 	diff = get_1d_interpolator(c_ne_D, ne_D)
 	return diff(c)
 end
 
-@eval Main calc_ne_D = $calc_ne_D
 
 function calc_ne_k(c, T)
 
@@ -105,12 +98,9 @@ function calc_ne_k(c, T)
 	return diff(c)
 end
 
-@eval Main calc_ne_k = $calc_ne_k
 
 function calc_pe_k(c, T)
 
 	diff = get_1d_interpolator(c_pe_k, pe_k)
 	return diff(c)
 end
-
-@eval Main calc_pe_k = $calc_pe_k
